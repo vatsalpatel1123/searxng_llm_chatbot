@@ -458,12 +458,25 @@ Contributions are welcome! Here's how you can help:
 - Multi-language support
 - Performance optimizations
 
+## Advanced Implementation Guide
+
+For detailed research on implementing advanced LLM-powered search features, see:
+
+[RESEARCH_LLM_SEARCH.md](RESEARCH_LLM_SEARCH.md) - Comprehensive guide covering:
+- Architecture patterns (RAG, Agent-based, Hybrid)
+- Search backend comparisons (SearXNG, Tavily, Brave API)
+- Safety and reliability considerations
+- Implementation approaches with code examples
+- Cost analysis and recommendations
+- Production deployment strategies
+
 ## Roadmap
 
 - [ ] Web UI (Gradio/Streamlit)
 - [ ] REST API server
 - [ ] Streaming responses
-- [ ] Support for more LLM providers
+- [ ] Support for more LLM providers (Tavily API integration)
+- [ ] Agent-based search for complex queries
 - [ ] Multi-turn conversations with context
 - [ ] Vector database for semantic search
 - [ ] Docker compose for easy deployment
