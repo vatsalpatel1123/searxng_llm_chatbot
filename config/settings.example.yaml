@@ -1,0 +1,194 @@
+# SearXNG Configuration
+searxng:
+  url: "http://127.0.0.1:8080"
+  timeout: 15
+  max_results: 5  # Reduced from 10 to 5 for faster processing
+  
+  # Best engines based on Reddit/HN research
+  enabled_engines:
+    - google
+    - bing
+    - duckduckgo
+    - brave
+    - wikipedia
+  
+  # Slow or unreliable engines to disable
+  disabled_engines:
+    - qwant
+    - yahoo
+    - yandex
+  
+  # Category-specific settings
+  categories:
+    general: ["google", "bing", "duckduckgo", "brave"]
+    news: ["google_news", "bing_news"]
+    academic: ["google_scholar", "wikipedia"]
+    technical: ["stackoverflow", "github"]
+
+# Local LLM Configuration
+llm:
+  url: "http://127.0.0.1:1235/v1/chat/completions"
+  model: "gpt@q2_k"
+  temperature: 0.7
+  max_tokens: 500  # Reduced from 2000 for faster responses
+  timeout: 120  # Increased from 30s to 120s
+  
+  # System prompts
+  default_system_prompt: "You are a helpful AI assistant. Provide accurate, well-sourced answers."
+  
+  search_system_prompt: |
+    You are a helpful AI assistant with access to web search results.
+    When answering:
+    1. Use the search results provided to give accurate, up-to-date information
+    2. Cite sources using [1], [2], etc. format
+    3. If search results are insufficient, say so
+    4. Be concise but comprehensive
+    5. Always mention the source when stating facts from search results
+
+# Cache Configuration
+cache:
+  enabled: true
+  directory: "./cache"
+  
+  # TTL (Time To Live) in seconds
+  ttl:
+    static_facts: 2592000  # 30 days
+    news: 3600             # 1 hour
+    general: 86400         # 24 hours
+    personal: 604800       # 7 days
+  
+  # Max cache size (number of entries)
+  max_entries: 1000
+  
+  # Clean old entries on startup
+  cleanup_on_start: true
+
+# Query Analysis Configuration
+query_analysis:
+  # Keywords that indicate search is needed
+  search_indicators:
+    time_sensitive:
+      - latest
+      - current
+      - today
+      - now
+      - recent
+      - this week
+      - this month
+      - yesterday
+    
+    factual:
+      - who is
+      - what is
+      - when did
+      - where is
+      - how many
+      - statistics
+      - data
+      - numbers
+    
+    specific_data:
+      - budget
+      - price
+      - cost
+      - salary
+      - population
+      - weather
+      - temperature
+      - stock
+      - news
+      - report
+  
+  # Keywords that indicate search might NOT be needed
+  no_search_indicators:
+    - explain
+    - how to
+    - tutorial
+    - difference between
+    - pros and cons
+    - advantages
+    - disadvantages
+  
+  # Minimum query length to consider for search
+  min_query_length: 5
+
+# Result Processing Configuration
+result_processing:
+  # Minimum results to consider query successful
+  min_results: 2
+  
+  # Filter out low-quality domains
+  blacklist_domains:
+    - pinterest.com
+    - quora.com
+    - scribd.com
+  
+  # Prioritize these domains (higher quality)
+  whitelist_domains:
+    - wikipedia.org
+    - gov.in
+    - edu
+    - official government sites
+  
+  # Maximum snippet length
+  max_snippet_length: 300
+  
+  # Remove duplicate results
+  deduplication: true
+  
+  # Relevance scoring weights
+  scoring:
+    title_match: 3.0
+    content_match: 2.0
+    domain_authority: 1.5
+    recency: 1.0
+
+# Context Building Configuration
+context_building:
+  # Maximum tokens for context (keep it under LLM limit)
+  max_context_tokens: 3000
+  
+  # Format style
+  format: "structured"  # or "simple"
+  
+  # Include metadata
+  include_metadata: true
+  
+  # Citation format
+  citation_format: "[{index}] {title}\n    {snippet}\n    Source: {url}\n"
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "./logs/chatbot.log"
+  console: true
+  
+  # Log format
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Performance Configuration
+performance:
+  # Enable request retries
+  retry_enabled: true
+  retry_max_attempts: 3
+  retry_delay: 1  # seconds
+  
+  # Parallel processing
+  parallel_searches: false  # Set true if you want faster but more resource-intensive
+  
+  # Request pooling
+  connection_pool_size: 10
+
+# Advanced Settings
+advanced:
+  # Query expansion (add related terms)
+  query_expansion: false
+  
+  # Result re-ranking
+  rerank_results: true
+  
+  # Source credibility scoring
+  credibility_scoring: true
+  
+  # Fallback to LLM knowledge if search fails
+  fallback_to_llm: true

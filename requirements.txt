@@ -1,0 +1,17 @@
+# Core Dependencies
+requests==2.31.0
+pyyaml==6.0.1
+
+# Text Processing
+beautifulsoup4==4.12.3
+lxml==5.1.0
+
+# Utilities
+python-dateutil==2.8.2
+validators==0.22.0
+
+# Logging
+colorlog==6.8.2
+
+# Optional but recommended
+tenacity==8.2.3  # For retry logic
